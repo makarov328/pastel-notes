@@ -11,7 +11,7 @@ FROM node:22-alpine AS frontend-builder
 WORKDIR /app/frontend
 
 # Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 # Copy package files first for better caching
 COPY frontend/package.json frontend/pnpm-lock.yaml* ./
@@ -28,12 +28,12 @@ RUN pnpm build
 # -----------------------------------------------------------------------------
 # Stage 2: Production image
 # -----------------------------------------------------------------------------
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 
 WORKDIR /app
 
 # Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 # Copy backend
 COPY backend/package.json backend/pnpm-lock.yaml* ./backend/
